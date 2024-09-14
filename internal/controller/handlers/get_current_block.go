@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"tx_parser/internal/model"
 	"tx_parser/internal/service/actions"
 )
 
@@ -15,12 +16,7 @@ func GetCurrentBlockHandler(service actions.GetCurrentBlock) http.HandlerFunc {
 			return
 		}
 
-		//TODO to model
-		response := struct {
-			BlockNumber int `json:"blockNumber"`
-		}{
-			BlockNumber: blockNumber,
-		}
+		response := model.GetCurrentBlockResponse{BlockNumber: blockNumber}
 
 		// Set content type to application/json
 		w.Header().Set("Content-Type", "application/json")

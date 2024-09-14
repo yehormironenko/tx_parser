@@ -2,5 +2,6 @@ package route
 
 const (
 	EchoPath            = "/echo"
-	GetCurrentBlockPath = "/getcurrentblock"
+	GetCurrentBlockPath = "/current-block"
+	GetTransactionsPath = "/transactions"
 )

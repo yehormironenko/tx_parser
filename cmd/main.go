@@ -28,9 +28,11 @@ func main() {
 	// services
 	echoService := core.NewEcho(logger)
 	getCurrentBlockNumberService := actions.NewGetCurrentBlock(service.ExternalClient{EthereumClient: ethereumClient}, logger)
+	getTransactionsService := actions.NewGetTransactions(service.ExternalClient{EthereumClient: ethereumClient}, logger)
 	handlerSettings := &controller.HandlersSettings{
 		EchoService:     echoService,
 		GetCurrentBlock: getCurrentBlockNumberService,
+		GetTransactions: getTransactionsService,
 		Logger:          logger,
 	}
 

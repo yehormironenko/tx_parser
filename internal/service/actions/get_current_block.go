@@ -1,8 +1,10 @@
 package actions
 
 import (
+	"fmt"
 	"log"
 	"tx_parser/internal/service"
+	"tx_parser/internal/service/helpers"
 )
 
 type GetCurrentBlock struct {
@@ -17,12 +19,21 @@ func NewGetCurrentBlock(clients service.ExternalClient, logger *log.Logger) *Get
 	}
 }
 
-func (gb *GetCurrentBlock) GetCurrentBlock() (int, error) {
+func (gb *GetCurrentBlock) GetCurrentBlock() (int64, error) {
 	log.Println("Request in GetCurrentBlock")
-	blockNumber, err := gb.externalClients.EthereumClient.GetCurrentBlock()
+	jsonResponse, err := gb.externalClients.EthereumClient.GetCurrentBlock()
 	if err != nil {
 		return 0, err
 	}
-	log.Printf("Current block number is: %d", blockNumber)
-	return blockNumber, nil
+
+	hexValue := jsonResponse.Result
+
+	intValue, err := helpers.ConvertHexToInt(hexValue)
+	if err != nil {
+		return 0, fmt.Errorf("error converting hex to int: %w", err)
+	}
+
+	log.Printf("Current block number is: %d", intValue)
+
+	return intValue, nil
 }
