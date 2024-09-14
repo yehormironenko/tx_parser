@@ -8,6 +8,7 @@ import (
 	"tx_parser/config"
 	"tx_parser/internal/client"
 	"tx_parser/internal/controller"
+	"tx_parser/internal/repository"
 	"tx_parser/internal/service"
 	"tx_parser/internal/service/actions"
 	"tx_parser/internal/service/core"
@@ -24,15 +25,20 @@ func main() {
 	//externalClient
 	ethereumClient := client.NewEthereumApiClient(c.Client.Endpoint, logger)
 
+	subscriberMap := make(map[string]struct{})
+	inMemoryRepository := repository.NewMemoryRepo(subscriberMap, logger)
+
 	//TODO create a builder for it
 	// services
 	echoService := core.NewEcho(logger)
 	getCurrentBlockNumberService := actions.NewGetCurrentBlock(service.ExternalClient{EthereumClient: ethereumClient}, logger)
 	getTransactionsService := actions.NewGetTransactions(service.ExternalClient{EthereumClient: ethereumClient}, logger)
+	notificationService := actions.NewNotificationService(inMemoryRepository, logger)
 	handlerSettings := &controller.HandlersSettings{
 		EchoService:     echoService,
 		GetCurrentBlock: getCurrentBlockNumberService,
 		GetTransactions: getTransactionsService,
+		Subscriptions:   notificationService,
 		Logger:          logger,
 	}
 

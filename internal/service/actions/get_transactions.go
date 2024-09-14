@@ -48,9 +48,9 @@ func (gt *GetTransactions) GetTransactions(address string) (model.Transactions, 
 		transactions = append(transactions, model.Transaction{
 			Address:          result.Address,
 			Amount:           result.Data,
-			BlockNumber:      blockNumber,
-			LogIndex:         logIndex,
-			TransactionIndex: transactionIndex,
+			BlockNumber:      int(blockNumber),
+			LogIndex:         int(logIndex),
+			TransactionIndex: int(transactionIndex),
 			Removed:          result.Removed,
 		})
 	}

@@ -35,7 +35,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 
 	// Define the request body
 	// TODO change it and what is ID
-	requestBody := []byte(`{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}`)
+	requestBody := []byte(`{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}`)
 
 	req, err := http.NewRequest("POST", e.baseUrl, bytes.NewBuffer(requestBody))
 	if err != nil {
@@ -72,10 +72,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 }
 
 func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult, error) {
-	// Define the filter parameters
 	params := model.EthGetLogsParams{
-		//	FromBlock: "0x0",
-		//	ToBlock:   "latest",
 		Address: address,
 	}
 
@@ -103,7 +100,6 @@ func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult
 	}
 	defer resp.Body.Close()
 
-	// Read the response body
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)

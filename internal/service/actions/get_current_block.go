@@ -19,7 +19,7 @@ func NewGetCurrentBlock(clients service.ExternalClient, logger *log.Logger) *Get
 	}
 }
 
-func (gb *GetCurrentBlock) GetCurrentBlock() (int64, error) {
+func (gb *GetCurrentBlock) GetCurrentBlock() (int, error) {
 	log.Println("Request in GetCurrentBlock")
 	jsonResponse, err := gb.externalClients.EthereumClient.GetCurrentBlock()
 	if err != nil {
@@ -35,5 +35,5 @@ func (gb *GetCurrentBlock) GetCurrentBlock() (int64, error) {
 
 	log.Printf("Current block number is: %d", intValue)
 
-	return intValue, nil
+	return int(intValue), nil
 }

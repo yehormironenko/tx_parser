@@ -13,6 +13,7 @@ type HandlersSettings struct {
 	EchoService     *core.Echo
 	GetCurrentBlock *actions.GetCurrentBlock
 	GetTransactions *actions.GetTransactions
+	Subscriptions   *actions.NotificationServiceImpl
 	Logger          *log.Logger
 }
 
@@ -22,7 +23,7 @@ func Handlers(settings *HandlersSettings) *http.ServeMux {
 	mux.HandleFunc(route.EchoPath, handlers.EchoHandler(*settings.EchoService))
 	mux.HandleFunc(route.GetCurrentBlockPath, handlers.GetCurrentBlockHandler(*settings.GetCurrentBlock))
 	mux.HandleFunc(route.GetTransactionsPath, handlers.GetTransactionsHandler(*settings.GetTransactions))
-	//...all other handlers
+	mux.HandleFunc(route.SubscribePath, handlers.SubscribeHandler(*settings.Subscriptions))
 
 	//TODO add all other route
 

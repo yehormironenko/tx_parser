@@ -1,5 +1,5 @@
 package model
 
 type GetCurrentBlockResponse struct {
-	BlockNumber int64 `json:"blockNumber"`
+	BlockNumber int `json:"blockNumber"`
 }

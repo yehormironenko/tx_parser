@@ -4,4 +4,5 @@ const (
 	EchoPath            = "/echo"
 	GetCurrentBlockPath = "/current-block"
 	GetTransactionsPath = "/transactions"
+	SubscribePath       = "/subscribe"
 )
