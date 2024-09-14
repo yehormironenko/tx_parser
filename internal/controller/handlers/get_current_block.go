@@ -7,7 +7,7 @@ import (
 	"tx_parser/internal/service"
 )
 
-func GetCurrentBlockHandler(service service.GetCurrentBlock) http.HandlerFunc {
+func GetCurrentBlockHandler(service service.BlockRetriever) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Call the service to get the current block number
 		blockNumber, err := service.GetCurrentBlock()

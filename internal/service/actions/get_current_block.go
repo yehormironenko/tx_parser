@@ -7,20 +7,20 @@ import (
 	"tx_parser/internal/service/helpers"
 )
 
-type GetCurrentBlock struct {
+type GetCurrentBlockService struct {
 	externalClients service.ExternalClient
 	logger          *log.Logger
 }
 
-func NewGetCurrentBlock(clients service.ExternalClient, logger *log.Logger) *GetCurrentBlock {
-	return &GetCurrentBlock{
+func NewGetCurrentBlockService(clients service.ExternalClient, logger *log.Logger) *GetCurrentBlockService {
+	return &GetCurrentBlockService{
 		externalClients: clients,
 		logger:          logger,
 	}
 }
 
-func (gb *GetCurrentBlock) GetCurrentBlock() (int, error) {
-	gb.logger.Println("Request in GetCurrentBlock")
+func (gb *GetCurrentBlockService) GetCurrentBlock() (int, error) {
+	gb.logger.Println("Request in GetCurrentBlockService")
 	jsonResponse, err := gb.externalClients.EthereumClient.GetCurrentBlock()
 	if err != nil {
 		return 0, err

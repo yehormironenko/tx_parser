@@ -9,7 +9,7 @@ import (
 	"tx_parser/internal/service"
 )
 
-func SubscribeHandler(service service.Notification) http.HandlerFunc {
+func SubscribeHandler(service service.SubscriptionManager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req model.SubscribeRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

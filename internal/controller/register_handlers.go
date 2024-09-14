@@ -11,9 +11,9 @@ import (
 
 type HandlersSettings struct {
 	EchoService     *core.Echo
-	GetCurrentBlock *actions.GetCurrentBlock
-	GetTransactions *actions.GetTransactions
-	Subscriptions   *actions.NotificationServiceImpl
+	GetCurrentBlock *actions.GetCurrentBlockService
+	GetTransactions *actions.GetTransactionsService
+	Subscriptions   *actions.SubscriptionsService
 	Logger          *log.Logger
 }
 

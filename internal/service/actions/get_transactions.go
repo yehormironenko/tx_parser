@@ -7,21 +7,21 @@ import (
 	"tx_parser/internal/service/helpers"
 )
 
-type GetTransactions struct {
+type GetTransactionsService struct {
 	externalClients service.ExternalClient
 	logger          *log.Logger
 }
 
-func NewGetTransactions(clients service.ExternalClient, logger *log.Logger) *GetTransactions {
-	return &GetTransactions{
+func NewGetTransactionsService(clients service.ExternalClient, logger *log.Logger) *GetTransactionsService {
+	return &GetTransactionsService{
 		externalClients: clients,
 		logger:          logger,
 	}
 }
 
-func (gt *GetTransactions) GetTransactions(address string) (model.Transactions, error) {
+func (gt *GetTransactionsService) GetTransactions(address string) (model.Transactions, error) {
 
-	gt.logger.Println("Request in GetTransactions")
+	gt.logger.Println("Request in GetTransactionsService")
 
 	resp, err := gt.externalClients.EthereumClient.GetTransactions(address)
 	if err != nil {

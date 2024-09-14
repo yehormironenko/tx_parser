@@ -31,8 +31,8 @@ func main() {
 	//TODO create a builder for it
 	// services
 	echoService := core.NewEcho(logger)
-	getCurrentBlockNumberService := actions.NewGetCurrentBlock(service.ExternalClient{EthereumClient: ethereumClient}, logger)
-	getTransactionsService := actions.NewGetTransactions(service.ExternalClient{EthereumClient: ethereumClient}, logger)
+	getCurrentBlockNumberService := actions.NewGetCurrentBlockService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
+	getTransactionsService := actions.NewGetTransactionsService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
 	notificationService := actions.NewNotificationService(inMemoryRepository, logger)
 	handlerSettings := &controller.HandlersSettings{
 		EchoService:     echoService,

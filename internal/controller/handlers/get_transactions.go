@@ -7,7 +7,7 @@ import (
 	"tx_parser/internal/service"
 )
 
-func GetTransactionsHandler(service service.GetTransactions) http.HandlerFunc {
+func GetTransactionsHandler(service service.TransactionFetcher) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req model.GetTransactionsRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

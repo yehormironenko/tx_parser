@@ -6,19 +6,19 @@ import (
 	"tx_parser/internal/repository"
 )
 
-type NotificationServiceImpl struct {
-	repository repository.SubscribeRepo
+type SubscriptionsService struct {
+	repository repository.SubscriberRepository
 	logger     *log.Logger
 }
 
-func NewNotificationService(repo repository.SubscribeRepo, logger *log.Logger) *NotificationServiceImpl {
-	return &NotificationServiceImpl{
+func NewNotificationService(repo repository.SubscriberRepository, logger *log.Logger) *SubscriptionsService {
+	return &SubscriptionsService{
 		repository: repo,
 		logger:     logger,
 	}
 }
 
-func (s *NotificationServiceImpl) Subscribe(address string) (bool, error) {
+func (s *SubscriptionsService) Subscribe(address string) (bool, error) {
 	s.logger.Println("Adding address to the subscribers")
 	isAdded, err := s.repository.InsertNewSubscriber(address)
 	if err != nil {
@@ -27,7 +27,7 @@ func (s *NotificationServiceImpl) Subscribe(address string) (bool, error) {
 	return isAdded, err
 }
 
-func (s *NotificationServiceImpl) Unsubscribe(address string) (bool, error) {
+func (s *SubscriptionsService) Unsubscribe(address string) (bool, error) {
 	s.logger.Println("Deleting user from subscriber list")
 	isDeleted, err := s.repository.RemoveSubscriber(address)
 	if err != nil {
@@ -36,6 +36,6 @@ func (s *NotificationServiceImpl) Unsubscribe(address string) (bool, error) {
 	return isDeleted, err
 }
 
-func (s *NotificationServiceImpl) Notify(address string, transaction model.Transaction) {
+func (s *SubscriptionsService) Notify(address string, transaction model.Transaction) {
 
 }

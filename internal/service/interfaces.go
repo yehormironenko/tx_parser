@@ -4,20 +4,23 @@ import (
 	"tx_parser/internal/model"
 )
 
-type Echo interface {
+type Echoer interface {
 	Echo() string
 }
 
-type GetCurrentBlock interface {
+type BlockRetriever interface {
 	GetCurrentBlock() (int, error)
 }
 
-type GetTransactions interface {
+type TransactionFetcher interface {
 	GetTransactions(address string) (model.Transactions, error)
 }
 
-type Notification interface {
+type SubscriptionManager interface {
 	Subscribe(address string) (bool, error)
 	Unsubscribe(address string) (bool, error)
+}
+
+type Notifier interface {
 	Notify(address string, transaction model.Transaction)
 }
