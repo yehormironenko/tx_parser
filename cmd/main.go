@@ -6,7 +6,10 @@ import (
 	"net/http"
 	"os"
 	"tx_parser/config"
+	"tx_parser/internal/client"
 	"tx_parser/internal/controller"
+	"tx_parser/internal/service"
+	"tx_parser/internal/service/actions"
 	"tx_parser/internal/service/core"
 )
 
@@ -17,12 +20,20 @@ func main() {
 	if err != nil {
 		log.Panicf("cannot read config file")
 	}
+	logger.SetPrefix("")
+	//externalClient
+	ethereumClient := client.NewEthereumApiClient(c.Client.Endpoint, logger)
 
+	//TODO create a builder for it
+	// services
 	echoService := core.NewEcho(logger)
+	getCurrentBlockNumberService := actions.NewGetCurrentBlock(service.ExternalClient{EthereumClient: ethereumClient}, logger)
 	handlerSettings := &controller.HandlersSettings{
-		Logger:      logger,
-		EchoService: echoService,
+		EchoService:     echoService,
+		GetCurrentBlock: getCurrentBlockNumberService,
+		Logger:          logger,
 	}
+
 	mux := controller.Handlers(handlerSettings)
 
 	log.Printf("Server started on %v:%v", c.Server.Host, c.Server.Port)
