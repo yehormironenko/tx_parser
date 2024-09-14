@@ -21,11 +21,11 @@ func NewGetTransactions(clients service.ExternalClient, logger *log.Logger) *Get
 
 func (gt *GetTransactions) GetTransactions(address string) (model.Transactions, error) {
 
-	log.Println("Request in GetTransactions")
+	gt.logger.Println("Request in GetTransactions")
 
 	resp, err := gt.externalClients.EthereumClient.GetTransactions(address)
 	if err != nil {
-		log.Fatalf("Error response from externalclient: %v", err)
+		gt.logger.Fatalf("Error response from externalclient: %v", err)
 	}
 
 	var transactions model.Transactions
@@ -34,15 +34,15 @@ func (gt *GetTransactions) GetTransactions(address string) (model.Transactions, 
 
 		blockNumber, err := helpers.ConvertHexToInt(result.BlockNumber)
 		if err != nil {
-			log.Printf("Error converting blockNumber: %v\n", err)
+			gt.logger.Printf("Error converting blockNumber: %v\n", err)
 		}
 		transactionIndex, err := helpers.ConvertHexToInt(result.TransactionIndex)
 		if err != nil {
-			log.Printf("Error converting transactionIndex: %v\n", err)
+			gt.logger.Printf("Error converting transactionIndex: %v\n", err)
 		}
 		logIndex, err := helpers.ConvertHexToInt(result.LogIndex)
 		if err != nil {
-			log.Printf("Error converting logIndex: %v\n", err)
+			gt.logger.Printf("Error converting logIndex: %v\n", err)
 		}
 
 		transactions = append(transactions, model.Transaction{

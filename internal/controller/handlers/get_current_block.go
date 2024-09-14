@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"tx_parser/internal/model"
-	"tx_parser/internal/service/actions"
+	"tx_parser/internal/service"
 )
 
-func GetCurrentBlockHandler(service actions.GetCurrentBlock) http.HandlerFunc {
+func GetCurrentBlockHandler(service service.GetCurrentBlock) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Call the service to get the current block number
 		blockNumber, err := service.GetCurrentBlock()

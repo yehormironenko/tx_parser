@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"net/http"
-	"tx_parser/internal/service/core"
+	"tx_parser/internal/service"
 )
 
-func EchoHandler(service core.Echo) http.HandlerFunc {
+func EchoHandler(service service.Echo) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		echoResponse := service.Echo()
 		w.Write([]byte(echoResponse))

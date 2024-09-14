@@ -8,13 +8,11 @@ import (
 
 type NotificationServiceImpl struct {
 	repository repository.SubscribeRepo
-	//notifications chan model.Transaction
-	logger *log.Logger
+	logger     *log.Logger
 }
 
 func NewNotificationService(repo repository.SubscribeRepo, logger *log.Logger) *NotificationServiceImpl {
 	return &NotificationServiceImpl{
-		//notifications: make(chan model.Transaction, 100),
 		repository: repo,
 		logger:     logger,
 	}

@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"tx_parser/internal"
 	"tx_parser/internal/model"
-	"tx_parser/internal/service/actions"
+	"tx_parser/internal/service"
 )
 
-func SubscribeHandler(service actions.NotificationServiceImpl) http.HandlerFunc {
+func SubscribeHandler(service service.Notification) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req model.SubscribeRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

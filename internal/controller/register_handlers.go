@@ -19,11 +19,10 @@ type HandlersSettings struct {
 
 func Handlers(settings *HandlersSettings) *http.ServeMux {
 	mux := http.NewServeMux()
-	// Register the echo for "/echo"
-	mux.HandleFunc(route.EchoPath, handlers.EchoHandler(*settings.EchoService))
-	mux.HandleFunc(route.GetCurrentBlockPath, handlers.GetCurrentBlockHandler(*settings.GetCurrentBlock))
-	mux.HandleFunc(route.GetTransactionsPath, handlers.GetTransactionsHandler(*settings.GetTransactions))
-	mux.HandleFunc(route.SubscribePath, handlers.SubscribeHandler(*settings.Subscriptions))
+	mux.HandleFunc(route.EchoPath, handlers.EchoHandler(settings.EchoService))
+	mux.HandleFunc(route.GetCurrentBlockPath, handlers.GetCurrentBlockHandler(settings.GetCurrentBlock))
+	mux.HandleFunc(route.GetTransactionsPath, handlers.GetTransactionsHandler(settings.GetTransactions))
+	mux.HandleFunc(route.SubscribePath, handlers.SubscribeHandler(settings.Subscriptions))
 
 	//TODO add all other route
 

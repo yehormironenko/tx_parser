@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 	"tx_parser/internal/client/model"
 )
 
@@ -24,7 +25,7 @@ type ethereumApiClient struct {
 func NewEthereumApiClient(baseUrl string, logger *log.Logger) EthereumApiClient {
 	return &ethereumApiClient{
 		baseUrl:    baseUrl,
-		httpClient: http.Client{},
+		httpClient: http.Client{Timeout: 2 * time.Second},
 		logger:     logger,
 	}
 }
@@ -66,12 +67,14 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error unmarshaling JSON: %w", err)
 	}
-	log.Printf("Response from %v : %v", e.baseUrl, jsonResponse)
+	e.logger.Printf("Response from %v : %v", e.baseUrl, jsonResponse)
 
 	return &jsonResponse, nil
 }
 
 func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult, error) {
+	e.logger.Printf("Getting transactions for address %v", address)
+
 	params := model.EthGetLogsParams{
 		Address: address,
 	}
@@ -94,10 +97,13 @@ func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult
 
 	req.Header.Set("Content-Type", "application/json")
 
+	e.logger.Printf("Sending request to %s", e.baseUrl)
+
 	resp, err := e.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
+
 	defer resp.Body.Close()
 
 	responseBody, err := io.ReadAll(resp.Body)
@@ -111,6 +117,8 @@ func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult
 	if err != nil {
 		return nil, fmt.Errorf("error unmarshalling JSON: %w", err)
 	}
+
+	e.logger.Printf("Response from %v : %v", e.baseUrl, response)
 
 	return &response, nil
 
