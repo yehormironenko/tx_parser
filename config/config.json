@@ -1,0 +1,10 @@
+{
+  "server": {
+    "host": "localhost",
+    "port": 8092,
+    "debug": true
+  },
+  "client": {
+    "url": "https://ethereum-rpc.publicnode.com"
+  }
+}
