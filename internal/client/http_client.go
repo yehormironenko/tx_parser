@@ -34,8 +34,6 @@ func NewEthereumApiClient(baseUrl string, logger *log.Logger) EthereumApiClient 
 func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	e.logger.Println("Getting current block in the Ethereum blockchain")
 
-	// Define the request body
-	// TODO change it and what is ID
 	requestBody := []byte(`{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}`)
 
 	req, err := http.NewRequest("POST", e.baseUrl, bytes.NewBuffer(requestBody))
@@ -50,7 +48,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	// Send the request
 	resp, err := e.httpClient.Do(req)
 	if err != nil {
-		//e.logger.Fatalf("error sending request: %v", err)
+		e.logger.Printf("error sending request: %v", err)
 		return nil, fmt.Errorf("error sending request: %w", err)
 	}
 	defer resp.Body.Close()
@@ -58,6 +56,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	// Read the response body
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
+		e.logger.Printf("error reading response body: %v", err)
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
 
@@ -65,6 +64,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	var jsonResponse model.GetCurrentBlock
 	err = json.Unmarshal(responseBody, &jsonResponse)
 	if err != nil {
+		e.logger.Printf("error reading response body: %v", err)
 		return nil, fmt.Errorf("error unmarshaling JSON: %w", err)
 	}
 	e.logger.Printf("Response from %v : %v", e.baseUrl, jsonResponse)
@@ -92,6 +92,7 @@ func (e *ethereumApiClient) GetTransactions(address, fromBlock, toBlock *string)
 		"jsonrpc": "2.0",
 		"method":  "eth_getLogs",
 		"params":  []interface{}{params},
+		"id":      1,
 	})
 
 	if err != nil {
