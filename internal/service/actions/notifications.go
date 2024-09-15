@@ -65,7 +65,7 @@ func (e *NotificationService) StartPolling() {
 			e.currentBlock = latestBlock - 1
 		}
 
-		time.Sleep(10 * time.Second) // Poll every 10 seconds
+		time.Sleep(20 * time.Second) // Poll every 20 seconds
 	}
 }
 
@@ -101,7 +101,7 @@ func (e *NotificationService) fetchLatestBlock() (int, error) {
 func (e *NotificationService) processBlock(blockNumber int) {
 	toBlock := fmt.Sprintf("0x%x", blockNumber)
 
-	//curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock":"0x13cb930","toBlock":"latest"}],"id":1}' https://ethereum-rpc.publicnode.com/
+	// curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock":"0x13cb930","toBlock":"latest"}],"id":1}' https://ethereum-rpc.publicnode.com/
 	// Request above returns error: Please specify an address in your request
 	for address, latestBlockNumber := range e.repository.GetSubscribers() {
 
@@ -134,11 +134,6 @@ func (e *NotificationService) processBlock(blockNumber int) {
 func (e *NotificationService) notifySubscriber(tx model.Transaction) {
 	e.logger.Printf("Notifying subscriber about transaction for address: %s", tx.Address)
 	// TODO possible to configure different notifications
-}
-
-// isSubscribed checks if a given address is subscribed
-func (e *NotificationService) isSubscribed(address string) (bool, error) {
-	return e.repository.IsSubscribed(address)
 }
 
 func (e *NotificationService) convertLogToTransaction(ethLog ethlog.EthLog) model.Transaction {

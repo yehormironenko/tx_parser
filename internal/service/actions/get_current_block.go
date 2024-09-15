@@ -20,7 +20,7 @@ func NewGetCurrentBlockService(clients service.ExternalClient, logger *log.Logge
 }
 
 func (gb *GetCurrentBlockService) GetCurrentBlock() (int, error) {
-	gb.logger.Println("Request in GetCurrentBlockService")
+	gb.logger.Println("Checking current block number service")
 	jsonResponse, err := gb.externalClients.EthereumClient.GetCurrentBlock()
 	if err != nil {
 		return 0, err

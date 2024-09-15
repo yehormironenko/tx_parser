@@ -23,12 +23,12 @@ func (mr *MemoryRepo) InsertNewSubscriber(address, blockNumber string) (bool, er
 	defer mr.mu.Unlock()
 
 	if _, exists := mr.subscribers[address]; exists {
-		mr.logger.Println("address is already subscribed")
+		mr.logger.Println("address is already in the list of subscribers")
 		return false, nil
 	}
 
 	mr.subscribers[address] = blockNumber
-	mr.logger.Printf("address added to subscribers %v with starting block number: %v", address, blockNumber)
+	mr.logger.Printf("address: %v added to the list of subscribers with starting block number: %v", address, blockNumber)
 	return true, nil
 }
 
@@ -37,25 +37,13 @@ func (mr *MemoryRepo) RemoveSubscriber(address string) (bool, error) {
 	defer mr.mu.Unlock()
 
 	if _, exists := mr.subscribers[address]; !exists {
-		mr.logger.Println("address is not subscribed")
+		mr.logger.Println("address is not in the list of subscribers")
 		return false, nil
 	}
 
 	delete(mr.subscribers, address)
-	mr.logger.Printf("address unsubscribed %v", address)
+	mr.logger.Printf("address: %v removed from the list of subsribers", address)
 	return true, nil
-}
-
-func (mr *MemoryRepo) IsSubscribed(address string) (bool, error) {
-	mr.mu.Lock()
-	defer mr.mu.Unlock()
-
-	if _, exists := mr.subscribers[address]; exists {
-		mr.logger.Println("address is already subscribed")
-		return true, nil
-	}
-
-	return false, nil
 }
 
 func (mr *MemoryRepo) GetSubscribers() map[string]string {
@@ -69,5 +57,6 @@ func (mr *MemoryRepo) UpdateValue(address, block string) (bool, error) {
 	mr.mu.Lock()
 	defer mr.mu.Unlock()
 	mr.subscribers[address] = block
+	log.Printf("Latest block has been updated for address: %v; new value is: %v", address, block)
 	return true, nil
 }

@@ -21,7 +21,7 @@ func NewSubscriptionsService(repo repository.SubscriberRepository, clients servi
 }
 
 func (s *SubscriptionsService) Subscribe(address string) (bool, error) {
-	s.logger.Println("Adding address to the subscribers")
+	s.logger.Printf("Adding address %v to the subscribers", address)
 
 	currentBlock, err := s.externalClients.EthereumClient.GetCurrentBlock()
 	if err != nil {
@@ -37,7 +37,7 @@ func (s *SubscriptionsService) Subscribe(address string) (bool, error) {
 }
 
 func (s *SubscriptionsService) Unsubscribe(address string) (bool, error) {
-	s.logger.Println("Deleting user from subscriber list")
+	s.logger.Printf("Deleting address %v from subscriber list", address)
 	isDeleted, err := s.repository.RemoveSubscriber(address)
 	if err != nil {
 		return isDeleted, err

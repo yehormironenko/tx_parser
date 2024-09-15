@@ -20,8 +20,7 @@ func NewGetTransactionsService(clients service.ExternalClient, logger *log.Logge
 }
 
 func (gt *GetTransactionsService) GetTransactions(address string) (model.Transactions, error) {
-
-	gt.logger.Println("Request in GetTransactionsService")
+	gt.logger.Printf("Getting all transactionf for adress: %v", address)
 
 	resp, err := gt.externalClients.EthereumClient.GetTransactions(&address, nil, nil)
 	if err != nil {
@@ -54,6 +53,6 @@ func (gt *GetTransactionsService) GetTransactions(address string) (model.Transac
 			Removed:          result.Removed,
 		})
 	}
-
+	gt.logger.Printf("Received transactions: %v", transactions)
 	return transactions, nil
 }

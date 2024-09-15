@@ -32,7 +32,7 @@ func NewEthereumApiClient(baseUrl string, logger *log.Logger) EthereumApiClient 
 
 // GetCurrentBlock fetches the current block number from the Ethereum blockchain
 func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
-	e.logger.Println("Getting current block in the Ethereum blockchain")
+	e.logger.Println("Getting current block in the Ethereum blockchain from %v", e.baseUrl)
 
 	requestBody := []byte(`{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}`)
 
@@ -40,8 +40,6 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-
-	e.logger.Printf("Sending request to %s", e.baseUrl)
 
 	req.Header.Set("Content-Type", "application/json")
 
@@ -64,7 +62,7 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	var jsonResponse model.GetCurrentBlock
 	err = json.Unmarshal(responseBody, &jsonResponse)
 	if err != nil {
-		e.logger.Printf("error reading response body: %v", err)
+		e.logger.Printf("error unmarshaling JSON: %v", err)
 		return nil, fmt.Errorf("error unmarshaling JSON: %w", err)
 	}
 	e.logger.Printf("Response from %v : %v", e.baseUrl, jsonResponse)
