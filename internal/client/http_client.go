@@ -13,7 +13,7 @@ import (
 
 type EthereumApiClient interface {
 	GetCurrentBlock() (*model.GetCurrentBlock, error)
-	GetTransactions(address string) (*model.EthLogResult, error)
+	GetTransactions(address, fromBlock, toBlock *string) (*model.EthLogResult, error)
 }
 
 type ethereumApiClient struct {
@@ -72,20 +72,28 @@ func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
 	return &jsonResponse, nil
 }
 
-func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult, error) {
-	e.logger.Printf("Getting transactions for address %v", address)
+func (e *ethereumApiClient) GetTransactions(address, fromBlock, toBlock *string) (*model.EthLogResult, error) {
+	e.logger.Printf(
+		"Getting transactions for address: %v; fromBlock: %v; toBlock: %v",
+		optionalString(address),
+		optionalString(fromBlock),
+		optionalString(toBlock),
+	)
 
 	params := model.EthGetLogsParams{
-		Address: address,
+		FromBlock: fromBlock,
+		ToBlock:   toBlock,
+		Address:   address,
 	}
 
+	e.logger.Printf("params %v", params)
 	// Prepare the JSON request body
 	requestBody, err := json.Marshal(map[string]interface{}{
 		"jsonrpc": "2.0",
 		"method":  "eth_getLogs",
 		"params":  []interface{}{params},
-		"id":      1,
 	})
+
 	if err != nil {
 		return nil, fmt.Errorf("error marshalling request: %w", err)
 	}
@@ -121,5 +129,12 @@ func (e *ethereumApiClient) GetTransactions(address string) (*model.EthLogResult
 	e.logger.Printf("Response from %v : %v", e.baseUrl, response)
 
 	return &response, nil
+}
 
+// Helper function to safely handle nil pointers
+func optionalString(str *string) string {
+	if str == nil {
+		return "<nil>"
+	}
+	return *str
 }

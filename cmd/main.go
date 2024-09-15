@@ -25,7 +25,7 @@ func main() {
 	//externalClient
 	ethereumClient := client.NewEthereumApiClient(c.Client.Endpoint, logger)
 
-	subscriberMap := make(map[string]struct{})
+	subscriberMap := make(map[string]string)
 	inMemoryRepository := repository.NewMemoryRepo(subscriberMap, logger)
 
 	//TODO create a builder for it
@@ -33,12 +33,19 @@ func main() {
 	echoService := core.NewEcho(logger)
 	getCurrentBlockNumberService := actions.NewGetCurrentBlockService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
 	getTransactionsService := actions.NewGetTransactionsService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
-	notificationService := actions.NewNotificationService(inMemoryRepository, logger)
+	subscriptionService := actions.NewSubscriptionsService(inMemoryRepository, service.ExternalClient{EthereumClient: ethereumClient}, logger)
+	notificationService := actions.NewNotificationService(inMemoryRepository, service.ExternalClient{EthereumClient: ethereumClient}, logger)
+
+	// Start polling Ethereum blockchain
+	go notificationService.StartPolling()
+	// Start processing notifications asynchronously
+	go notificationService.ProcessNotifications()
+
 	handlerSettings := &controller.HandlersSettings{
 		EchoService:     echoService,
 		GetCurrentBlock: getCurrentBlockNumberService,
 		GetTransactions: getTransactionsService,
-		Subscriptions:   notificationService,
+		Subscriptions:   subscriptionService,
 		Logger:          logger,
 	}
 

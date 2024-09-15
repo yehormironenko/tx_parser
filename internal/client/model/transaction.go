@@ -1,9 +1,9 @@
 package model
 
 type EthGetLogsParams struct {
-	//FromBlock string `json:"from_block"`
-	//ToBlock   string `json:"to_block"`
-	Address string `json:"address"`
+	FromBlock *string `json:"fromBlock"`
+	ToBlock   *string `json:"toBlock"`
+	Address   *string `json:"address"`
 }
 
 type EthLogResult struct {

@@ -23,7 +23,7 @@ func (gt *GetTransactionsService) GetTransactions(address string) (model.Transac
 
 	gt.logger.Println("Request in GetTransactionsService")
 
-	resp, err := gt.externalClients.EthereumClient.GetTransactions(address)
+	resp, err := gt.externalClients.EthereumClient.GetTransactions(&address, nil, nil)
 	if err != nil {
 		gt.logger.Fatalf("Error response from externalclient: %v", err)
 	}
