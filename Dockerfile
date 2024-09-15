@@ -1,31 +1,25 @@
+# Build stage
 FROM golang:alpine AS build
-ARG CI_GITLAB_MODULES_REG_USERNAME
-ARG CI_GITLAB_MODULES_REG_TOKEN
 
-ENV GOPRIVATE gitlab.com/bango
-
-COPY ./ /src
-WORKDIR /src
+# Install dependencies
 RUN apk update && apk add --no-cache git ca-certificates build-base
 
-RUN git config --global \
-            url."https://${CI_GITLAB_MODULES_REG_USERNAME}:${CI_GITLAB_MODULES_REG_TOKEN}@gitlab.com/".insteadOf "https://gitlab.com/" && CGO_ENABLED=1 GOOS=linux go build -a -tags musl -installsuffix cgo -ldflags '-w -s -extldflags "-static"' -o /main cmd/main.go
+WORKDIR /src
+COPY ./ /src
 
-# Create a non-root user (in the build stage)
-RUN adduser -D -g '' appuser
+# Build the Go application with flags for static linking and optimization
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /main ./cmd/main.go
 
-FROM scratch AS runtime
+# Runtime stage
+FROM alpine:latest AS runtime
 
-# Copy the built binary and other necessary files
+# Install ca-certificates for HTTPS
+RUN apk --no-cache add ca-certificates
+
+# Copy the built binary and configuration files
 COPY --from=build /main /
-COPY --from=build /src/config/*.yaml /config/
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=build /src/config/*.json /config/
 
-# Copy the non-root user from the build stage
-COPY --from=build /etc/passwd /etc/passwd
+EXPOSE 8092
 
-# Use the non-root user to run the application
-USER appuser
-
-EXPOSE 8085
 CMD ["/main"]
