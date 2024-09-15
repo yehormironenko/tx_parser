@@ -4,57 +4,24 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
-	"tx_parser/config"
-	"tx_parser/internal/client"
-	"tx_parser/internal/controller"
-	"tx_parser/internal/repository"
-	"tx_parser/internal/service"
-	"tx_parser/internal/service/actions"
-	"tx_parser/internal/service/core"
+	"tx_parser/cmd/initialize"
 )
 
 func main() {
-	logger := log.New(os.Stdout, "CONFIG-LOADER: ", log.Ldate|log.Ltime|log.Lshortfile)
-
-	c, err := config.LoadConfig("config/config.json", logger)
+	components, err := initialize.NewAppComponents()
 	if err != nil {
-		log.Panicf("cannot read config file")
+		log.Fatalf("Error initializing application components: %v", err)
 	}
-	logger.SetPrefix("")
-	//externalClient
-	ethereumClient := client.NewEthereumApiClient(c.Client.Endpoint, logger)
-
-	subscriberMap := make(map[string]string)
-	inMemoryRepository := repository.NewMemoryRepo(subscriberMap, logger)
-
-	//TODO create a builder for it
-	// services
-	echoService := core.NewEcho(logger)
-	getCurrentBlockNumberService := actions.NewGetCurrentBlockService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
-	getTransactionsService := actions.NewGetTransactionsService(service.ExternalClient{EthereumClient: ethereumClient}, logger)
-	subscriptionService := actions.NewSubscriptionsService(inMemoryRepository, service.ExternalClient{EthereumClient: ethereumClient}, logger)
-	notificationService := actions.NewNotificationService(inMemoryRepository, service.ExternalClient{EthereumClient: ethereumClient}, logger)
 
 	// Start polling Ethereum blockchain
-	go notificationService.StartPolling()
+	go components.NotificationService.StartPolling()
 	// Start processing notifications asynchronously
-	go notificationService.ProcessNotifications()
+	go components.NotificationService.ProcessNotifications()
 
-	handlerSettings := &controller.HandlersSettings{
-		EchoService:     echoService,
-		GetCurrentBlock: getCurrentBlockNumberService,
-		GetTransactions: getTransactionsService,
-		Subscriptions:   subscriptionService,
-		Logger:          logger,
-	}
-
-	mux := controller.Handlers(handlerSettings)
-
-	log.Printf("Server started on %v:%v", c.Server.Host, c.Server.Port)
-	err = http.ListenAndServe(fmt.Sprintf("%v:%v", c.Server.Host, c.Server.Port), mux)
+	// Start HTTP server
+	err = http.ListenAndServe(fmt.Sprintf("%v:%v", components.Config.Server.Host, components.Config.Server.Port), components.Mux)
 	if err != nil {
-		log.Fatalf("Server failed to start: %v", err)
+		components.Logger.Fatalf("Server failed to start: %v", err)
 	}
-
+	components.Logger.Printf("Server started on %v:%v", components.Config.Server.Host, components.Config.Server.Port)
 }
