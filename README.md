@@ -64,6 +64,11 @@ Application will be available on the 127.0.0.1:8092 address
       ```http
       POST: localhost:8092/transactions
       ```
+      ```json
+         {
+          "address": "0xbe206379252ed32b85cf8d1f53195c6daac75801"
+         }
+      ```
     - **Response**:
       ```json
       [
@@ -77,34 +82,37 @@ Application will be available on the 127.0.0.1:8092 address
       ]
       ```
 
-- **Subscribe** - Add an address to observers. Two available actions: subscribe/unsubscribe
-    - **Example**:
-        - **Request**:
-          ```http
-          POST: localhost:8092/subscribe
-          ```
-          ```json
-          {
-            "action": "subscribe",
-            "address": "0xbe206379252ed32b85cf8d1f53195c6daac75801"
-          }
-          ```
-        - **Response**:
-          ```plaintext
-          Subscribed to address 0xbe206379252ed32b85cf8d1f53195c6daac75801
-          ```
+  - **Subscribe** - Add an address to observers. Two available actions: subscribe/unsubscribe
+      - **Example**:
+          - **Request**:
+            ```http
+            POST: localhost:8092/subscribe
+            ```
+            ```json
+            {
+              "action": "subscribe",
+              "address": "0xbe206379252ed32b85cf8d1f53195c6daac75801"
+            }
+            ```
+          - **Response**:
+            ```plaintext
+            Subscribed to address 0xbe206379252ed32b85cf8d1f53195c6daac75801
+            ```
 
-        - **Request**:
-          ```json
-          {
-            "action": "unsubscribe",
-            "address": "0xbe206379252ed32b85cf8d1f53195c6daac75801"
-          }
-          ```
-        - **Response**:
-          ```plaintext
-          Unsubscribed from address 0xbe206379252ed32b85cf8d1f53195c6daac75801
-          ```
+          - **Request**:
+            ```http
+            POST: localhost:8092/subscribe
+            ```
+            ```json
+            {
+              "action": "unsubscribe",
+              "address": "0xbe206379252ed32b85cf8d1f53195c6daac75801"
+            }
+            ```
+          - **Response**:
+            ```plaintext
+            Unsubscribed from address 0xbe206379252ed32b85cf8d1f53195c6daac75801
+            ```
 ## Testing
 To run tests, use the following command:
 ```bash
