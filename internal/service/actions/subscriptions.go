@@ -42,5 +42,5 @@ func (s *SubscriptionsService) Unsubscribe(address string) (bool, error) {
 	if err != nil {
 		return isDeleted, err
 	}
-	return isDeleted, err
+	return isDeleted, nil
 }

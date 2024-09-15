@@ -32,7 +32,7 @@ func NewEthereumApiClient(baseUrl string, logger *log.Logger) EthereumApiClient 
 
 // GetCurrentBlock fetches the current block number from the Ethereum blockchain
 func (e *ethereumApiClient) GetCurrentBlock() (*model.GetCurrentBlock, error) {
-	e.logger.Println("Getting current block in the Ethereum blockchain from %v", e.baseUrl)
+	e.logger.Println("Getting current block in the Ethereum blockchain from", e.baseUrl)
 
 	requestBody := []byte(`{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}`)
 
