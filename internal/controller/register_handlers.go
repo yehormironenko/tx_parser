@@ -23,8 +23,8 @@ func Handlers(settings *HandlersSettings) *http.ServeMux {
 	mux.HandleFunc(route.GetCurrentBlockPath, handlers.GetCurrentBlockHandler(settings.GetCurrentBlock))
 	mux.HandleFunc(route.GetTransactionsPath, handlers.GetTransactionsHandler(settings.GetTransactions))
 	mux.HandleFunc(route.SubscribePath, handlers.SubscribeHandler(settings.Subscriptions))
-
-	//TODO add all other route
-
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.NotFound(w, r)
+	})
 	return mux
 }
