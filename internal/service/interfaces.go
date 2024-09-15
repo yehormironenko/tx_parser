@@ -1,7 +1,7 @@
 package service
 
 import (
-	"tx_parser/internal/model"
+	"github.com/yehormironenko/tx_parser/internal/model"
 )
 
 type Echoer interface {

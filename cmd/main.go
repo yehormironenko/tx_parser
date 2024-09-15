@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/yehormironenko/tx_parser/cmd/initialize"
 	"log"
 	"net/http"
-	"tx_parser/cmd/initialize"
 )
 
 func main() {

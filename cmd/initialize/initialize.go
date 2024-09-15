@@ -2,16 +2,16 @@ package initialize
 
 import (
 	"fmt"
+	"github.com/yehormironenko/tx_parser/config"
+	"github.com/yehormironenko/tx_parser/internal/client"
+	"github.com/yehormironenko/tx_parser/internal/controller"
+	"github.com/yehormironenko/tx_parser/internal/repository"
+	"github.com/yehormironenko/tx_parser/internal/service"
+	"github.com/yehormironenko/tx_parser/internal/service/actions"
+	"github.com/yehormironenko/tx_parser/internal/service/core"
 	"log"
 	"net/http"
 	"os"
-	"tx_parser/config"
-	"tx_parser/internal/client"
-	"tx_parser/internal/controller"
-	"tx_parser/internal/repository"
-	"tx_parser/internal/service"
-	"tx_parser/internal/service/actions"
-	"tx_parser/internal/service/core"
 )
 
 type AppComponents struct {

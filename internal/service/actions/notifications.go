@@ -2,14 +2,14 @@ package actions
 
 import (
 	"fmt"
+	ethlog "github.com/yehormironenko/tx_parser/internal/client/model"
+	"github.com/yehormironenko/tx_parser/internal/model"
+	"github.com/yehormironenko/tx_parser/internal/repository"
+	"github.com/yehormironenko/tx_parser/internal/service"
+	"github.com/yehormironenko/tx_parser/internal/service/helpers"
 	"log"
 	"sync"
 	"time"
-	ethlog "tx_parser/internal/client/model"
-	"tx_parser/internal/model"
-	"tx_parser/internal/repository"
-	"tx_parser/internal/service"
-	"tx_parser/internal/service/helpers"
 )
 
 type NotificationService struct {

@@ -1,9 +1,9 @@
 package actions
 
 import (
+	"github.com/yehormironenko/tx_parser/internal/repository"
+	"github.com/yehormironenko/tx_parser/internal/service"
 	"log"
-	"tx_parser/internal/repository"
-	"tx_parser/internal/service"
 )
 
 type SubscriptionsService struct {

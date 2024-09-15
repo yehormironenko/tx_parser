@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/yehormironenko/tx_parser/internal/client/model"
 	"io"
 	"log"
 	"net/http"
 	"time"
-	"tx_parser/internal/client/model"
 )
 
 type EthereumApiClient interface {

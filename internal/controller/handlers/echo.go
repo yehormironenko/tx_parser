@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"github.com/yehormironenko/tx_parser/internal/service"
 	"net/http"
-	"tx_parser/internal/service"
 )
 
 func EchoHandler(service service.Echoer) http.HandlerFunc {

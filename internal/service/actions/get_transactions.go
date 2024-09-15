@@ -1,10 +1,10 @@
 package actions
 
 import (
+	"github.com/yehormironenko/tx_parser/internal/model"
+	"github.com/yehormironenko/tx_parser/internal/service"
+	"github.com/yehormironenko/tx_parser/internal/service/helpers"
 	"log"
-	"tx_parser/internal/model"
-	"tx_parser/internal/service"
-	"tx_parser/internal/service/helpers"
 )
 
 type GetTransactionsService struct {

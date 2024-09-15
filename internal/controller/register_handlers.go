@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"github.com/yehormironenko/tx_parser/internal/controller/handlers"
+	"github.com/yehormironenko/tx_parser/internal/route"
+	"github.com/yehormironenko/tx_parser/internal/service/actions"
+	"github.com/yehormironenko/tx_parser/internal/service/core"
 	"log"
 	"net/http"
-	"tx_parser/internal/controller/handlers"
-	"tx_parser/internal/route"
-	"tx_parser/internal/service/actions"
-	"tx_parser/internal/service/core"
 )
 
 type HandlersSettings struct {

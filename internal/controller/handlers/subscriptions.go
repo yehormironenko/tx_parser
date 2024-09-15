@@ -3,10 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/yehormironenko/tx_parser/internal"
+	"github.com/yehormironenko/tx_parser/internal/model"
+	"github.com/yehormironenko/tx_parser/internal/service"
 	"net/http"
-	"tx_parser/internal"
-	"tx_parser/internal/model"
-	"tx_parser/internal/service"
 )
 
 func SubscribeHandler(service service.SubscriptionManager) http.HandlerFunc {

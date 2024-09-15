@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/yehormironenko/tx_parser/internal/model"
+	"github.com/yehormironenko/tx_parser/internal/service"
 	"net/http"
-	"tx_parser/internal/model"
-	"tx_parser/internal/service"
 )
 
 func GetCurrentBlockHandler(service service.BlockRetriever) http.HandlerFunc {

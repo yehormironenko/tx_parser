@@ -1,6 +1,6 @@
 package service
 
-import "tx_parser/internal/client"
+import "github.com/yehormironenko/tx_parser/internal/client"
 
 type ExternalClient struct {
 	EthereumClient client.EthereumApiClient
