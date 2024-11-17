@@ -1,7 +1,7 @@
 package config
 
 import (
-	json "encoding/json"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"

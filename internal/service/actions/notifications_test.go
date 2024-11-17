@@ -2,14 +2,15 @@ package actions
 
 import (
 	"errors"
-	"github.com/yehormironenko/tx_parser/internal/client/model"
-	txn "github.com/yehormironenko/tx_parser/internal/model"
-	client "github.com/yehormironenko/tx_parser/internal/service"
-	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 	"log"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/yehormironenko/tx_parser/internal/client/model"
+	txn "github.com/yehormironenko/tx_parser/internal/model"
+	client "github.com/yehormironenko/tx_parser/internal/service"
+	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 )
 
 func TestStartPolling_Success(t *testing.T) {

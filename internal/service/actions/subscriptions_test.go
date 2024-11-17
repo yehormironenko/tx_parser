@@ -2,12 +2,13 @@ package actions
 
 import (
 	"errors"
-	"github.com/yehormironenko/tx_parser/internal/client/model"
-	client "github.com/yehormironenko/tx_parser/internal/service"
-	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/yehormironenko/tx_parser/internal/client/model"
+	client "github.com/yehormironenko/tx_parser/internal/service"
+	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 )
 
 func TestSubscribe_Success(t *testing.T) {

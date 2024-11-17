@@ -2,12 +2,13 @@ package actions
 
 import (
 	"errors"
-	"github.com/yehormironenko/tx_parser/internal/client/model"
-	"github.com/yehormironenko/tx_parser/internal/service"
-	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/yehormironenko/tx_parser/internal/client/model"
+	"github.com/yehormironenko/tx_parser/internal/service"
+	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
 )
 
 // TestGetCurrentBlock_Success tests the successful retrieval of the current block

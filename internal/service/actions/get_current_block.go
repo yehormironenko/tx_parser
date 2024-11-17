@@ -2,9 +2,10 @@ package actions
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/yehormironenko/tx_parser/internal/service"
 	"github.com/yehormironenko/tx_parser/internal/service/helpers"
-	"log"
 )
 
 type GetCurrentBlockService struct {

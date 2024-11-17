@@ -1,10 +1,11 @@
 package actions
 
 import (
+	"log"
+
 	"github.com/yehormironenko/tx_parser/internal/model"
 	"github.com/yehormironenko/tx_parser/internal/service"
 	"github.com/yehormironenko/tx_parser/internal/service/helpers"
-	"log"
 )
 
 type GetTransactionsService struct {

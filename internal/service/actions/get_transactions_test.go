@@ -2,27 +2,15 @@ package actions
 
 import (
 	"errors"
+	"log"
+	"os"
+	"testing"
+
 	"github.com/yehormironenko/tx_parser/internal/client/model"
 	txn "github.com/yehormironenko/tx_parser/internal/model"
 	"github.com/yehormironenko/tx_parser/internal/service"
 	mock "github.com/yehormironenko/tx_parser/internal/service/actions/testing"
-	"log"
-	"os"
-	"testing"
 )
-
-/*// MockEthereumApiClientTransactions is a mock for the EthereumApiClient
-type MockEthereumApiClientTransactions struct {
-	GetTransactionsFunc func(address, fromBlock, toBlock *string) (*model.EthLogResult, error)
-}
-
-func (m *MockEthereumApiClientTransactions) GetCurrentBlock() (*model.GetCurrentBlock, error) {
-	return nil, nil
-}
-
-func (m *MockEthereumApiClientTransactions) GetTransactions(address, fromBlock, toBlock *string) (*model.EthLogResult, error) {
-	return m.GetTransactionsFunc(address, fromBlock, toBlock)
-}*/
 
 // TestGetTransactions_Success tests the successful retrieval of txn
 func TestGetTransactions_Success(t *testing.T) {

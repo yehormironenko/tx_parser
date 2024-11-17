@@ -2,6 +2,10 @@ package initialize
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+
 	"github.com/yehormironenko/tx_parser/config"
 	"github.com/yehormironenko/tx_parser/internal/client"
 	"github.com/yehormironenko/tx_parser/internal/controller"
@@ -9,9 +13,6 @@ import (
 	"github.com/yehormironenko/tx_parser/internal/service"
 	"github.com/yehormironenko/tx_parser/internal/service/actions"
 	"github.com/yehormironenko/tx_parser/internal/service/core"
-	"log"
-	"net/http"
-	"os"
 )
 
 type AppComponents struct {

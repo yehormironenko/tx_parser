@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/yehormironenko/tx_parser/internal/model"
 	"github.com/yehormironenko/tx_parser/internal/service"
-	"net/http"
 )
 
 func GetTransactionsHandler(service service.TransactionFetcher) http.HandlerFunc {
